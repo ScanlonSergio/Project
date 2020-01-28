@@ -22,8 +22,19 @@ var campgroundRoutes = require("./routes/campgrounds");
 var authRoutes = require("./routes/auth");
 
 
-//Creates a New DB yelp_camp if it doesn't exist or use if it does exist
-mongoose.connect("mongodb://localhost/yelp_camp", {useUnifiedTopology: true, useNewUrlParser: true});
+//Creates a New DB yelp_camp if it doesn't exist or use if it does exist Local Database..
+//mongoose.connect("mongodb://localhost/yelp_camp", {useUnifiedTopology: true, useNewUrlParser: true});
+
+//To link to DB on Mongo Atlas...Online version for mongoDB
+mongoose.connect("mongodb+srv://Sergio:scanny4477@mycluster-gr1o6.mongodb.net/test?retryWrites=true&w=majority", {
+      useUnifiedTopology: true,
+      useNewUrlParser: true
+      //useCreateIndex: true
+    }).then(() => {
+          console.log("Connected to DB");
+    }).catch(err => {
+      console.log("error", err);
+    });
 
 //To Extract Body and Request Parameters
 app.use(bodyParser.urlencoded({extended: true}));
