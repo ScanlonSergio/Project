@@ -7,7 +7,7 @@ var flash = require("connect-flash");
 var passport = require("passport");
 var LocalStrategy = require("passport-local");
 var methodOverride = require("method-override");
-var seedDB = require("./seeds");
+//var seedDB = require("./seeds");
 
 //>>>>>>>>>>>>>>>>>Database Schema Configuration<<<<<<<<<<<<<<<<<<<\\
 //******To Use All the Schemas from the Respective Files*******
