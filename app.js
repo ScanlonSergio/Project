@@ -23,7 +23,7 @@ var authRoutes = require("./routes/auth");
 
 
 //Creates a New DB yelp_camp if it doesn't exist or use if it does exist
-mongoose.connect("mongodb://localhost/yelp_camp", {useNewUrlParser: true});
+mongoose.connect("mongodb://localhost/yelp_camp", {useUnifiedTopology: true, useNewUrlParser: true});
 
 //To Extract Body and Request Parameters
 app.use(bodyParser.urlencoded({extended: true}));
