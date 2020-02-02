@@ -92,10 +92,12 @@ app.use(campgroundRoutes);
 app.use(commentRoutes);
 
 
+const PORT = process.env.PORT || 80;
+
 //To start the Server
-app.listen(3000, function(){
-	console.log("Yelcamp Server is ready to be used");
-});
+app.listen(PORT, () =>
+	console.log("Yelcamp Server is ready to be used and is running on port ${PORT}"));
+
 
 
 
