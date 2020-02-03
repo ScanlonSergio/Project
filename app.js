@@ -21,16 +21,32 @@ var commentRoutes = require("./routes/comments");
 var campgroundRoutes = require("./routes/campgrounds");
 var authRoutes = require("./routes/auth");
 
-
-//Creates a New DB yelp_camp if it doesn't exist or use if it does exist Local Database..
+/* -------------Connect DB Without Environment variables---------------*\
+// >>>>>>>>>>>>>>>>>>>>>>>>>>>>LOCAL DATABASE URL<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\\
+//****Creates a New DB yelp_camp if it doesn't exist or use if it does exist*****\\
 //mongoose.connect("mongodb://localhost/yelp_camp", {useUnifiedTopology: true, useNewUrlParser: true});
 
-//To link to DB on Mongo Atlas...Online version for mongoDB
+
+// >>>>>>>>>>>>>>>>>>>>>>>>....ONLINE DATABASE URL....<<<<<<<<<<<<<<<<<<<<<<<<<<<\\
+//**********To link to DB on Mongo Atlas...Online version for mongoDB************\\
 mongoose.connect("mongodb+srv://Sergio:scanny4477@mycluster-gr1o6.mongodb.net/test?retryWrites=true&w=majority", {
       useUnifiedTopology: true,
       useNewUrlParser: true
       //useCreateIndex: true
     }).then(() => {
+          console.log("Connected to DB");
+    }).catch(err => {
+      console.log("error", err);
+    });
+*/
+
+// -------------Connect DB With Environment variables--------------- \\
+//Giving local DB link as th back-up Url so the app doesnt crash.....\\
+var url = process.env.DATABASEURL || "mongodb://localhost/yelp_camp";
+mongoose.connect(url, {
+       useUnifiedTopology: true, 
+       useNewUrlParser: true
+     }).then(() => {
           console.log("Connected to DB");
     }).catch(err => {
       console.log("error", err);
@@ -96,7 +112,7 @@ const PORT = process.env.PORT || 80;
 
 //To start the Server
 app.listen(PORT, () =>
-	console.log("Yelcamp Server is ready to be used and is running on port ${PORT}"));
+	console.log("Yelcamp Server is ready to be used and is running on port " + PORT));
 
 
 
