@@ -70,6 +70,8 @@ app.use(flash());
 //Used to create three different campgrounds everytime a server starts
 //seedDB();     //seed the Database..
 
+//For getting the Timestamp at which the comment was created using moment.js
+app.locals.moment = require('moment');
 
 //>>>>>>>>>>>>>>>>>>>>Passport Configuration<<<<<<<<<<<<<<<<<<<<\\
 app.use(require("express-session")({
