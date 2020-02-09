@@ -19,19 +19,28 @@ router.get("/", function(req,res){
 
 // To display Register Form
 router.get("/register", function(req,res){
-  res.render("register");
+  res.render("register", {page: "register"});
 });
 
 // To Submit the Sign Up information
 router.post("/register", function(req,res){
   var newUser = new User({username: req.body.username});     //Important Note: We only store username in DB whereas password is stored as (salt and hash) value of actual password
+       if(req.body.adminCode === "secretcode4477"){          //"secretcode4477" is the code a user has to know if he is the admin.
+        newUser.isAdmin = true;
+       }
+
   User.register(newUser, req.body.password, function(err, user){         // Registers the User in DB.
       if(err){
-        req.flash("error", err.message);
-        return res.render("register");    //if there is error display Registration Form again.
+        console.log(err);
+        return res.render("register", {error: err.message});    //if there is error display Registration Form again.
       }
       passport.authenticate("local")(req,res, function(){   //local -(username & password) . can be twitter, facebook, etc
-        req.flash("success", "Welcome to Yelpcamp.." + user.username);
+        
+        if(user.isAdmin){
+          req.flash("success", "Welcome to Yelpcamp.." + user.username + "..!! You are an ADMIN..");
+        }else{
+          req.flash("success", "Welcome to Yelpcamp.." + user.username);
+        }
         res.redirect("/campgrounds");
       });
   });
@@ -39,7 +48,7 @@ router.post("/register", function(req,res){
 
 // To display Login Form
 router.get("/login", function(req,res){
-  res.render("login");
+  res.render("login", {page: "login"});
 });
 
 //On Submitting Login From
