@@ -6,6 +6,7 @@ var passport = require("passport");
 
 //To use User Schema from the models Directory.
 var User = require("../models/user");
+var Campground = require("../models/campground");
 
 
 //ROOT Route showing Home Page
@@ -24,7 +25,15 @@ router.get("/register", function(req,res){
 
 // To Submit the Sign Up information
 router.post("/register", function(req,res){
-  var newUser = new User({username: req.body.username});     //Important Note: We only store username in DB whereas password is stored as (salt and hash) value of actual password
+  var newUser = new User(                                      //Important Note: We only store other fields in DB whereas password is stored as (salt and hash) value of actual password
+                         {                                  
+                          username: req.body.username,
+                          firstName: req.body.firstName,
+                          lastName : req.body.lastName,
+                          email: req.body.email,
+                          avatar: req.body.avatar
+                         }
+                        );     
        if(req.body.adminCode === "secretcode4477"){          //"secretcode4477" is the code a user has to know if he is the admin.
         newUser.isAdmin = true;
        }
@@ -64,6 +73,26 @@ router.get("/logout", function(req,res){
   req.logout();
   req.flash("success", "You have been Logged Out..!!")
   res.redirect("/campgrounds")
-})
+});
+
+//To display User Profile Route
+router.get("/users/:id", function(req,res){
+     User.findById(req.params.id, function(err,foundUser){
+      if(err){
+        req.flash("error", "Something went Wrong");
+        res.redirect("/campgrounds");
+      }else{
+        Campground.find().where("author.id").equals(foundUser._id).exec(function(err,foundUserCampgrounds){
+          if(err){
+        req.flash("error", "Something went Wrong");
+        res.redirect("/campgrounds");
+      }else{
+              res.render("users/show", {user: foundUser, campgrounds: foundUserCampgrounds});
+           }
+        });
+         
+      }
+   });
+});
 
 module.exports = router;

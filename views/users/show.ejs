@@ -1,0 +1,47 @@
+<%- include("../partials/header") %>
+
+       <header id="user-profile-data" class="jumbotron">
+           <div class="container">
+              <h3>**User Profile**</h3>
+
+              <div class="row">
+                  <div class="col-md-4 col-sm-12">
+                       <div class="thumbnail">
+                           <img src="<%=user.avatar%>">
+                       </div>  
+                       <div class="name">
+                            <h3>Username: <i class="fa fa-user-circle-o" aria-hidden="true"></i> <%= user.username%></h3>
+                       </div>
+                         
+                  </div>
+                  <div class="col-md-6 col-sm-12">
+                       <h3>Name  : <i class="fa fa-id-card-o" aria-hidden="true"> </i> <%= user.firstName%>  <%= user.lastName%></h3>
+
+                       <h3>Email  : <i class="fa fa-envelope-o"                  aria-hidden="true"></i> <%= user.email %>
+                       </h3>
+                       
+                       <h3>Joined : <i class="fa fa-calendar"                  aria-hidden="true"></i> <%= user.joined %>
+                       </h3>
+
+                  </div>
+              </div>
+                       
+           </div>   
+       </header>
+
+   <div class="row text-center">
+      <h2><%= user.username %>'s Campgrounds Collection</h2>
+      <% campgrounds.forEach(function(campground){ %>
+      	<div class="col-md-3 col-sm-6">
+             <div class="thumbnail">
+               <img src="<%=campground.image%>">
+                <div class="caption">
+                  <a href="/campgrounds/<%= campground._id %>"><%= campground.name%></a>
+                </div>
+             </div>             
+        </div>
+      <% }) %>
+    </div>
+
+
+<%- include("../partials/footer") %>

@@ -20,7 +20,7 @@ router.get("/campgrounds/:id/comments/new", middleware.isLoggedIn, function(req,
          res.render("comments/new", {campground: campground});
       }
    })
-})
+});
 
 
 router.post("/campgrounds/:id/comments", middleware.isLoggedIn, function(req,res){
